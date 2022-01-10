@@ -2,9 +2,19 @@ using Documenter
 using Tomography
 
 makedocs(
-    sitename = "Tomography",
+    sitename = "Tomography.jl",
     format = Documenter.HTML(),
-    modules = [Tomography]
+    modules = [Tomography],
+    pages = Any[
+        "Home" => "index.md",
+        ]
+)
+
+deploydocs(
+    repo = "github.com/physimatics/Tomography.jl",
+    target = "build",
+    deps = nothing,
+    make = nothing,
 )
 
 # Documenter can also automatically deploy documentation to gh-pages.
