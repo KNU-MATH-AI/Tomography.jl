@@ -1,5 +1,3 @@
-using Tomography
-
 function conical_radon(p, ϕ)
 
     μ = 1;
@@ -35,8 +33,3 @@ function conical_radon(p, ϕ)
 
     return C
 end
-
-p = reverse(rand(200,200)^0, dims=2);
-
-C = conical_radon(p, π/4);
-using Plots; heatmap(reverse(C, dims=1))
