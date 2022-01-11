@@ -5,13 +5,13 @@ makedocs(
     sitename = "Tomography.jl",
     format = Documenter.HTML(),
     modules = [Tomography],
-    pages = Any[
+    pages = [
         "Home" => "index.md",
         ]
 )
 
 deploydocs(
-    repo = "github.com/physimatics/Tomography.jl",
+    repo = "github.com/KNU-MATH-AI/Tomography.jl",
     target = "build",
     deps = nothing,
     make = nothing,
