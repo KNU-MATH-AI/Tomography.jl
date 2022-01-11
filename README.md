@@ -1,5 +1,5 @@
 # Tomography.jl
 
-[![](https://img.shields.io/badge/docs-stable-blue.svg)](https://JuliaMath.github.io/FFTW.jl/stable)
+[![](https://img.shields.io/badge/docs-dev-blue.svg)](https://knu-math-ai.github.io/Tomography.jl/dev/)
 
 This is a package for Tomography.
