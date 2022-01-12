@@ -1,10 +1,24 @@
-function conical_radon(p, ϕ)
+function padding(p)
+    
+    θlim, slim = size(p);    
+    θ_left = Int(θlim/2+1);
+    θ_right = Int(θlim/2+θlim);
+    s_left = Int(slim/2+1);
+    s_right = Int(slim/2+slim);
 
-    μ = 1;
+    p_Padding = zeros(θlim*2, slim*2);
+    p_Padding[θ_left:θ_right, s_left:s_right] = p;
+
+    return p_Padding;
+end
+
+function conical_radon(p, ϕ, μ)
+
+    p = padding(p);
     θlim, slim = size(p);
-    θ = LinRange(-1, 1, θlim);
-    U = LinRange(-1, 1, θlim);
-    V = LinRange(-1, -2, slim);
+    θ = LinRange(-2, 2, θlim);
+    U = LinRange(-2, 2, θlim);
+    V = LinRange(2, -2, slim);
     C = zeros(length(V), length(U));
     interval = 2/(θlim-1);
 
