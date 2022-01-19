@@ -27,14 +27,14 @@ function backprojection!(reconstructed_image, Rf)
     return reconstructed_image
 end
 
-function backprojection_aim(Rf)
+function backprojection_anim(Rf)
     slim, θlim = size(Rf)
     reconstructed_image = zeros(slim, slim)
-    anim = backprojection_aim!(reconstructed_image, Rf)
+    anim = backprojection_anim!(reconstructed_image, Rf)
     return anim
 end
 
-function backprojection_aim!(reconstructed_image, Rf)
+function backprojection_anim!(reconstructed_image, Rf)
     slim, θlim= size(Rf)
     ylim, xlim = size(reconstructed_image)
     L = round(Int64, hypot(xlim, ylim))
