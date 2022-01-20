@@ -1,5 +1,9 @@
 module Tomography
 
+using Plots
+using FFTW
+using Interpolations
+
 include("phantom.jl")
 include("radon.jl")
 include("backprojection.jl")
