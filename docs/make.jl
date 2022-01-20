@@ -13,7 +13,6 @@ makedocs(
 deploydocs(
     repo = "github.com/KNU-MATH-AI/Tomography.jl",
     target = "build",
-    deps = nothing,
     make = nothing,
 )
 
