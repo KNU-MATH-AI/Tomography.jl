@@ -1,7 +1,7 @@
 name = "Tomography"
 uuid = "7b913008-954d-4a4c-99e7-286cce9c5096"
 authors = ["physimatics <bbbcaobb@gmail.com>"]
-version = "0.1.4"
+version = "0.1.5"
 
 [deps]
 FFTW = "7a1cc6ca-52ef-59f5-83cd-3a7055c09341"

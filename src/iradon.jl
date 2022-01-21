@@ -1,4 +1,6 @@
 function iradon(ℛf)
+    N = size(ℛf)[1]
+    
     ℱℛf = fft(ℛf, [1])
     
     fourier_filter = abs.(fftfreq(N))    
