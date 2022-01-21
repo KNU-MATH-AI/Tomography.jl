@@ -6,6 +6,7 @@ using Interpolations
 
 include("phantom.jl")
 include("radon.jl")
+include("iradon.jl")
 include("backprojection.jl")
 include("wave_forward.jl")
 
