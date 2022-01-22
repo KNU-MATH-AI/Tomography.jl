@@ -14,35 +14,48 @@ end
 
 function conical_radon(p, ϕ, μ)
 
+    ratio = 2;
     p = padding(p);
     θlim, slim = size(p);
     θ = LinRange(-2, 2, θlim);
     U = LinRange(-2, 2, θlim);
     V = LinRange(2, -2, slim);
     C = zeros(length(V), length(U));
-    interval = 2/(θlim-1);
+    interval = 2*ratio / (θlim - 1);
 
     for Cx = 1:length(U), Cy=1:length(V)
 
-        for column = 1:θlim
-            y_left = tan(π/2+ϕ)*(θ[column]-U[Cx])+V[Cy];
-            y_right = tan(π/2-ϕ)*(θ[column]-U[Cx])+V[Cy];
-
-            if -1 ≤ y_left ≤ 1 
-                height = 1-y_left;
-                nearest_row = round(Int64, ((height)-mod(height, interval))/interval)+1;
-                r = sqrt((U[Cx]-p[nearest_row, column])^2+(V[Cy]-p[nearest_row, column])^2);
-                C[Cy, Cx]+=p[nearest_row, column]*exp(-μ*r);
+        U_left = 1:Cx;
+        y_left = tan(π / 2 + ϕ) * (θ[U_left] .- U[Cx]) .+ V[Cy];
+        bit_left = abs.(y_left) .<= 1;
+    
+        if sum(bit_left)>0
+            y_left = y_left[bit_left];
+            height_left = ratio .- y_left;
+            nearest_row_left = round.(Int64, ((height_left) - mod.(height_left, interval)) / interval) .+ 1;
+            U_left = U_left[bit_left];
+            for i=1:length(nearest_row_left)
+                value_left = p[nearest_row_left[i], U_left[i]];
+                r_left = sqrt.((value_left-U[Cx])^2 + (value_left-V[Cy])^2);
+               C[Cy, Cx]+= value_left*exp(-μ*r_left);
             end
-
-            if -1 ≤ y_right ≤ 1
-                height = 1-y_right;
-                nearest_row = round(Int64, ((height)-mod(height, interval))/interval)+1;
-                r = sqrt((U[Cx]-p[nearest_row, column])^2+(V[Cy]-p[nearest_row, column])^2);
-                C[Cy, Cx]+=p[nearest_row, column]*exp(-μ*r);
-            end
-        
         end
+
+        U_right = Cx:length(U);
+        y_right = tan(π / 2 - ϕ) * (θ[U_right] .- U[Cx]) .+ V[Cy];
+        bit_right = abs.(y_right) .<= 1;
+
+        if sum(bit_right)>0
+            y_right = y_right[bit_right];
+            height_right = ratio .- y_right;           
+            nearest_row_right = round.(Int64, ((height_right) - mod.(height_right, interval)) / interval) .+ 1;
+            U_right = U_right[bit_right];
+            for i=1:length(nearest_row_right)
+                value_right = p[nearest_row_right[i], U_right[i]];
+                r_right = sqrt.((value_right-U[Cx])^2 + (value_right-V[Cy])^2);
+               C[Cy, Cx]+= value_right*exp(-μ*r_right);
+            end
+        end      
     end
 
     return C
