@@ -7,7 +7,7 @@ makedocs(
     modules = [Tomography],
     pages = [
         "Home" => "index.md",
-        "Phantom" => "phantom.md"
+        "Phantom" => "phantom.md",
         "Radon Transform" => "radon.md"
         ]
 )
