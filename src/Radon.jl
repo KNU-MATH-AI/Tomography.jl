@@ -43,7 +43,7 @@ end
 """
     backprojection(ℛf)(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
 
-return [back projection](https://freshrimpsushi.github.io/posts/derivation-and-properties-of-radon-transform/) of `ℛf`
+return [back projection](https://freshrimpsushi.github.io/posts/back-projection-dual-transform-of-radon-transform/) of `ℛf`
 
 # Keyword arguments
 
@@ -133,13 +133,12 @@ function iradon(ℛf, method="fbp")
 end
 
 """
-    fitered_backprojection(ℛf)
-
+    fitered_backprojection(ℛff::Matrix{T}, θ::Vector{T}) where {T<:Real}
 return f
 
 # Keyword arguments
 
-- `ℛf`: 2d array w.r.t. Radon transform of 'f'
+- `ℛf`: 2d array w.r.t. Radon transform of `f`
 - `θ`: projection angle
 """
 function fitered_backprojection(ℛf)
