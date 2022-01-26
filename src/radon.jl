@@ -1,28 +1,25 @@
-function radon(f)
-    Rf = zeros(maximum(size(f)), 180)
-    radon!(Rf, f)
-    return Rf
-end
+function radon_test(f, θ=0:(π/180):π-π/180)
+    ℛf = zeros(maximum(size(f)), length(θ))
 
-function radon!(Rf, f)
-    slim, θlim = size(Rf)
+    slim, θlim = size(ℛf)
     ylim, xlim = size(f)
     L = round(Int64, hypot(xlim, ylim))
+    
+    cos_ = cos.(θ)
+    sin_ = sin.(θ)
 
-    cos_ = cos.(0:(π/θlim):π-π/θlim)
-    sin_ = sin.(0:(π/θlim):π-π/θlim)
     S = LinRange(-L/2, L/2, slim)
     T = LinRange(-L/2, L/2, L)
     
-    for s ∈ 1:slim, θ ∈ 1:θlim
+    for sᵢ ∈ 1:slim, θᵢ ∈ 1:θlim
         for l ∈ 1:L
-            x = round(Int64, xlim/2 + S[s]*cos_[θ] + T[l]*sin_[θ])
-            y = round(Int64, ylim/2 - T[l]*cos_[θ] + S[s]*sin_[θ])
+            x = round(Int64, xlim/2 + S[sᵢ]*cos_[θᵢ] + T[l]*sin_[θᵢ])
+            y = round(Int64, ylim/2 - T[l]*cos_[θᵢ] + S[sᵢ]*sin_[θᵢ])
             if 1 ≤ x ≤ xlim && 1 ≤ y ≤ ylim
-                Rf[s, θ] += f[end-y+1, x]
+                ℛf[sᵢ, θᵢ] += f[end-y+1, x]
             end
         end
     end
     
-    return Rf
+    return ℛf
 end

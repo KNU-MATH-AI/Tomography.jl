@@ -19,3 +19,6 @@ function fitered_backprojection(ℛf)
     reconstructed_f = (π/360)*backprojection(ℱ⁻¹_filterd_ℱℛf)
     return reconstructed_f
 end
+
+function SART(ℛf)
+end
