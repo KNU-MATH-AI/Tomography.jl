@@ -1,24 +1,4 @@
-function interp_nd(G, P, X, Y)
-    iv = zeros(size(P)[1], length(X))
-    for i ∈ 1:length(X)
-        index_x = argmin(abs.(G.-X[i]))
-        index_y = argmin(abs.(G.-Y[i]))
-    
-        iv[:, i] = P[:, index_y, index_x]
-    end
-    return iv
-    end
 
-function interp(G, P, X, Y)
-    iv = zeros(length(X))
-    for i ∈ 1:length(X)
-        index_x = argmin(abs.(G.-X[i]))
-        index_y = argmin(abs.(G.-Y[i]))
-    
-        iv[i] = P[index_y, index_x]
-    end
-    return iv
-end    
 
 function wave_forward_operater(f, x, t, R, N_ϕ)
     N_b = size(f)[1]
