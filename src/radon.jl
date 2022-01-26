@@ -40,6 +40,16 @@ function radon(f, θ=0:(π/180):π-π/180)
     return ℛf
 end
 
+"""
+    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+
+return Radon transform of `f`
+
+# Keyword arguments
+
+- `f`: phantom
+- `θ`: projection angle
+"""
 function backprojection(Rf)
     slim, θlim = size(Rf)
     reconstructed_image = zeros(slim, slim)
@@ -64,6 +74,16 @@ function backprojection(Rf)
     return reconstructed_image
 end
 
+"""
+    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+
+return Radon transform of `f`
+
+# Keyword arguments
+
+- `f`: phantom
+- `θ`: projection angle
+"""
 function backprojection_anim(Rf)
     slim, θlim = size(Rf)
     reconstructed_image = zeros(slim, slim)
@@ -94,6 +114,16 @@ function backprojection_anim(Rf)
     return anim
 end
 
+"""
+    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+
+return Radon transform of `f`
+
+# Keyword arguments
+
+- `f`: phantom
+- `θ`: projection angle
+"""
 function iradon(ℛf, method="fbp")
     
     if method == "fbp"
@@ -103,6 +133,16 @@ function iradon(ℛf, method="fbp")
     return reconstructed_f
 end
 
+"""
+    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+
+return Radon transform of `f`
+
+# Keyword arguments
+
+- `f`: phantom
+- `θ`: projection angle
+"""
 function fitered_backprojection(ℛf)
     N = size(ℛf)[1]
     
@@ -117,5 +157,15 @@ function fitered_backprojection(ℛf)
     return reconstructed_f
 end
 
+"""
+    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+
+return Radon transform of `f`
+
+# Keyword arguments
+
+- `f`: phantom
+- `θ`: projection angle
+"""
 function SART(ℛf)
 end
