@@ -1,5 +1,7 @@
 # Radon Transform
 
+There are functions for Radon transform.
+
 ## Radom Trnasform
 ```@docs
 Radon.radon
@@ -10,11 +12,11 @@ Radon.radon
 Radon.backprojection
 ```
 
-## Filtered Back Projection
+## Inverse Radon Transform
 ```@docs
 Radon.iradon
 ```
-blahblahblahblahblah
+
 
 ```@docs
 Radon.filtered_backprojection

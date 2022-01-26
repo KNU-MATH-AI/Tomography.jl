@@ -7,11 +7,11 @@ export iradon, fitered_backprojection, SART
 """
     radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
 
-return Radon transform of `f`
+return [Radon transform](https://freshrimpsushi.github.io/posts/derivation-and-properties-of-radon-transform/) of `f`
 
 # Keyword arguments
 
-- `f`: phantom
+- `f`: 2-dimension phantom
 - `θ`: projection angle
 """
 function radon(f, θ=0:(π/180):π-π/180)
@@ -41,17 +41,17 @@ function radon(f, θ=0:(π/180):π-π/180)
 end
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+    backprojection(ℛf)(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
 
-return Radon transform of `f`
+return [back projection](https://freshrimpsushi.github.io/posts/derivation-and-properties-of-radon-transform/) of `ℛf`
 
 # Keyword arguments
 
-- `f`: phantom
+- `ℛf`: 2d array w.r.t. Radon transform of 'f'
 - `θ`: projection angle
 """
-function backprojection(Rf)
-    slim, θlim = size(Rf)
+function backprojection(ℛf, θ = 0:π/180:π-π/180)
+    slim, θlim = size(ℛf)
     reconstructed_image = zeros(slim, slim)
     
     ylim, xlim = size(reconstructed_image)
@@ -63,10 +63,9 @@ function backprojection(Rf)
     X = x'.*ones(xlim)
     Y = ones(ylim)'.*y
 
-    θ = 0 : π/θlim : π-π/θlim
     s = range(-L/2, L/2, length=slim)
 
-    for (value, angle) ∈ zip(eachcol(Rf), θ)
+    for (value, angle) ∈ zip(eachcol(ℛf), θ)
         S = X.*cos(angle) + Y.*sin(angle)
         interpolation = LinearInterpolation(s, value, extrapolation_bc=Line())
         reconstructed_image .+= interpolation.(S)
@@ -75,20 +74,20 @@ function backprojection(Rf)
 end
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+    backprojection_anim(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
 
-return Radon transform of `f`
+return animation for calculation backprojection of ℛf
 
 # Keyword arguments
 
-- `f`: phantom
+- `ℛf`: 2d array w.r.t. Radon transform of 'f'
 - `θ`: projection angle
 """
-function backprojection_anim(Rf)
-    slim, θlim = size(Rf)
+function backprojection_anim(ℛf)
+    slim, θlim = size(ℛf)
     reconstructed_image = zeros(slim, slim)
 
-    slim, θlim= size(Rf)
+    slim, θlim= size(ℛf)
     ylim, xlim = size(reconstructed_image)
     L = round(Int64, hypot(xlim, ylim))
 
@@ -102,7 +101,7 @@ function backprojection_anim(Rf)
     s = range(-L/2, L/2, length=slim)
 
     anim = Animation()
-    for (value, angle) ∈ zip(eachcol(Rf), θ)
+    for (value, angle) ∈ zip(eachcol(ℛf), θ)
         S = X.*cos(angle) + Y.*sin(angle)
         interpolation = LinearInterpolation(s, value, extrapolation_bc=Line())
         reconstructed_image .+= interpolation.(S)
@@ -115,7 +114,7 @@ function backprojection_anim(Rf)
 end
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+    iradon(ℛf, method="fbp")
 
 return Radon transform of `f`
 
@@ -134,13 +133,13 @@ function iradon(ℛf, method="fbp")
 end
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+    fitered_backprojection(ℛf)
 
-return Radon transform of `f`
+return f
 
 # Keyword arguments
 
-- `f`: phantom
+- `ℛf`: 2d array w.r.t. Radon transform of 'f'
 - `θ`: projection angle
 """
 function fitered_backprojection(ℛf)
@@ -158,13 +157,12 @@ function fitered_backprojection(ℛf)
 end
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
-
+    SART(ℛf)
 return Radon transform of `f`
 
 # Keyword arguments
 
-- `f`: phantom
+- `ℛf`: 2d array w.r.t. Radon transform of 'f'
 - `θ`: projection angle
 """
 function SART(ℛf)
