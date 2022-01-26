@@ -5,15 +5,15 @@ using FFTW
 using Interpolations
 
 include("phantom.jl")
-include("radon.jl")
-include("iradon.jl")
-include("backprojection.jl")
+include("Radon.jl")
 include("wave_forward.jl")
 include("util.jl")
 
 #Radon Transform
-export phantom, radon, iradon, backprojection, backprojection_anim
+export phantom
 
+@reexport using
+    .Radon
 #PAT(PhotoAcoustic Tomography)
 #export wave_forward
 
