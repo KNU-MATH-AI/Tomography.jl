@@ -5,32 +5,38 @@ export backprojection, backprojection_anim
 export iradon, fitered_backprojection, SART
 
 """
-    radon(f::Matrix{T}, θ::Vector{T}) where {T<:Real}
+    radon(f::Matrix{T}; θ=Vector(0:(π/180):π-π/180)::Vector{T}, in_circle=true) where {T<:Real}
 
-return [Radon transform](https://freshrimpsushi.github.io/posts/derivation-and-properties-of-radon-transform/) of `f`
+return Radon transform of `f`.
 
 # Keyword arguments
 
-- `f`: 2-dimension phantom
-- `θ`: projection angle
+- `f`: 2-dimension array.(phantom image)
+- `θ`: projection angle.(radian)
+- `in_circle`: 
 """
-function radon(f, θ=0:(π/180):π-π/180)
+function radon(f::Matrix{T}; θ=Vector(0:(π/180):π-π/180)::Vector{T}, in_circle=true) where {T<:Real}
     ℛf = zeros(maximum(size(f)), length(θ))
-
+    
     slim, θlim = size(ℛf)
     ylim, xlim = size(f)
-    L = round(Int64, hypot(xlim, ylim))
+
+    if in_circle == true
+        L = ylim
+    else
+        L = round(Int64, hypot(xlim, ylim))
+    end
     
     cos_ = cos.(θ)
     sin_ = sin.(θ)
 
-    S = LinRange(-L/2, L/2, slim)
-    T = LinRange(-L/2, L/2, L)
+    s = LinRange(-L/2, L/2, slim)
+    t = LinRange(-L/2, L/2, L)
     
     for sᵢ ∈ 1:slim, θᵢ ∈ 1:θlim
         for l ∈ 1:L
-            x = round(Int64, xlim/2 + S[sᵢ]*cos_[θᵢ] + T[l]*sin_[θᵢ])
-            y = round(Int64, ylim/2 - T[l]*cos_[θᵢ] + S[sᵢ]*sin_[θᵢ])
+            x = round(Int64, xlim/2 + s[sᵢ]*cos_[θᵢ] + t[l]*sin_[θᵢ])
+            y = round(Int64, ylim/2 - t[l]*cos_[θᵢ] + s[sᵢ]*sin_[θᵢ])
             if 1 ≤ x ≤ xlim && 1 ≤ y ≤ ylim
                 ℛf[sᵢ, θᵢ] += f[end-y+1, x]
             end
@@ -48,7 +54,7 @@ return [back projection](https://freshrimpsushi.github.io/posts/back-projection-
 # Keyword arguments
 
 - `ℛf`: 2d array w.r.t. Radon transform of 'f'
-- `θ`: projection angle
+- `θ`: projection angle(radian)
 """
 function backprojection(ℛf, θ = 0:π/180:π-π/180)
     slim, θlim = size(ℛf)
@@ -81,7 +87,7 @@ return animation for calculation backprojection of ℛf
 # Keyword arguments
 
 - `ℛf`: 2d array w.r.t. Radon transform of 'f'
-- `θ`: projection angle
+- `θ`: projection angle(radian)
 """
 function backprojection_anim(ℛf)
     slim, θlim = size(ℛf)
